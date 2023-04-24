@@ -5,7 +5,7 @@ Svaki zadatak se nalazi u svom folderu. Tu mozete naci resenje, tekst zadatka ka
 
 ## Kontribucije
 
-Kontribucije su otvorene za sve. Za svaki zadatak postoji fodler za prikladnim imenom. U folderu nalazi se resenje zadatak u .s fajlu kao i README.md sa tekstom zadataka i objasnjenjem algoritma.
+Kontribucije su otvorene za sve. Za svaki zadatak postoji folder za prikladnim imenom. U folderu nalazi se resenje zadatka u `.s` fajlu kao i `README.md` sa tekstom zadataka i objasnjenjem algoritma.
 
 ## Izvori zadataka
 

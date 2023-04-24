@@ -58,7 +58,7 @@ main:
     leal unos, %ecx
 
 petlja:
-    # Test radi &a (and) binarnu operaciju i brzi je nego cmp.
+    # test radi & (and) binarnu operaciju i brzi je nego cmp.
     # Kada radimo & izmedju broja gde su sve jedinice (0xffffffff) i eax
     # dobicemo 0 samo ako je eax 0, sto i hocemo
     testl $0xffffffff, %eax jz ispis 

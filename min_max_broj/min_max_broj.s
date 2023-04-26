@@ -31,15 +31,7 @@ main:
     # Ocitimo ceo ebx posto cemo da kasnije koristimo bl i bh
     # A rezultat vracamo kao izlazni kod
     xor %ebx, %ebx
-    # Pretpostavimo da je najmanji broj '9'
-    movb $'9', %bl
 
-    # Pretpostavimo da je najveci broj '0'
-    movb $'0', %bh
-
-    # U dh koristimo kao flag da znamo da li uopste u stringu ima
-    # bilo kakav broj
-    xorb %dh, %dh
     # Opet ucitavamo adresu unosa u ecx jer je
     # mozda ecx registar promenjen tokom sys_read
     leal unos, %ecx
@@ -47,35 +39,46 @@ main:
     # Smanjujemo eax da preksocimo '\n'
     decl %eax
 
-petlja:
+prvi_broj_petlja:
+    testl $0xffffffff, %eax
+    jz kraj
+    movb -1(%ecx, %eax, 1), %dl
+    # Da li je dl broj
+    cmpb $'0', %dl
+    jl prvi_broj_dalje
+    cmpb $'9', %dl
+    jg prvi_broj_dalje
+    movb %dl, %bl
+    movb %dl, %bh
+    decl %eax
+    jmp trazenje_minmax_petlja
+prvi_broj_dalje:
+    decl %eax
+    jmp prvi_broj_petlja
+
+trazenje_minmax_petlja:
     testl $0xffffffff, %eax
     jz sabiranje 
     movb -1(%ecx, %eax, 1), %dl
     # Da li je dl broj
     cmpb $'0', %dl
-    jl dalje
+    jl trazenje_minmax_dalje 
     cmpb $'9', %dl
-    jg dalje
+    jg trazenje_minmax_dalje 
 proveri_najmanji:
     cmpb %bl, %dl
     jge proveri_najveci
     movb %dl, %bl
-    movb $1, %dh
+    jmp trazenje_minmax_dalje
 proveri_najveci:
     cmpb %bh, %dl
-    jle dalje 
+    jle trazenje_minmax_dalje
     movb %dl, %bh
-    movb $1, %dh
-dalje:
+trazenje_minmax_dalje:
     decl %eax
-    jmp petlja
+    jmp trazenje_minmax_petlja 
 
 sabiranje:
-    testb $1, %dh
-    jnz ima_broja_u_stringu
-    xor %ebx, %ebx
-    jmp kraj
-ima_broja_u_stringu:
     addb %bh, %bl
     xorb %bh, %bh
 kraj: 

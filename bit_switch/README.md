@@ -1,3 +1,4 @@
+
 # BitSwitch
 
 Zadatak mozete naci u folderu t34 na [linku](http://www.acs.uns.ac.rs/sr/node/237/6727646).
@@ -5,12 +6,12 @@ Zadatak mozete naci u folderu t34 na [linku](http://www.acs.uns.ac.rs/sr/node/23
 ## Resenje  
 
 Deklaracija fukcije koju treba da napravimo izgleda ovako:
-```
+``` C
 int BitSwitch(unsigned int* niz, int duzina);
 ```
 
 Funkcija treba da prodje kroz niz brojeva i da za svaki broj promeni na nacin definisan u zadatku. Povratna vrednost je zbir broja promenjenuh bitova u svakom od brojeva. Da bi smo to lakse uradili u nasem programu cemo da napravimo jos jednu funkciju kojoj cemo da posaljemo adresu broja i ona ce da ga promeni. Povratna vrednost je broj promenjenih bitova.
-```
+``` C
 unsigned int switch_bits(unsigned int* n);
 ```
 
@@ -32,17 +33,18 @@ Radimo & (and) izmadju `%edx` i broja koji proveramo (`%ecx`). Binarana operacij
 
 Primer: 
 Proveravamo da li je 3. bit 1:
-
+```
     ...00011101 (%ecx)
 &   ...00000100 (%edx)
-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+---------------
     ...00000100
-
+```
 Ako bit na trenutnoj poziciji jeste 1 treba sledeci bit da promenimo (flip-ujemo). To radimo tako sto prvo `%edx` shift-ujemo levo za 1 da bi smo jedinicu pomerili za jedno mesto levo tj. na sledeci bit i onda radimo `xor %edx, %ecx`. 
 
 Xor operacija: 
 
 | xor | 1 | 0 |
+|-----|---|---|
 |  1  | 0 | 1 |
 |  0  | 1 | 0 |
 
@@ -54,10 +56,10 @@ Pogresno je posle xor-a jos jednom pomeriti `%edx` ulevo jer treba da proverimo 
 
 Napomena:
 Kada je bit na trenutnoj poziciji 1 i shift-ovali smo `%edx` ulevo da bi smo uradili xor u sledecoj instrukciji moramo proveriti da li je `%edx` postao 0. To nastaje u sledecoj situaciji.
-
+```
     100110... (%ecx)
 ^   100000... (%edx)
-\-\-\-\-\-\-\-\-\-\-\-\-\-
+-------------
     100000...
-
+```
 Kada je poslednji bit 1 onda nema sta vise da flipujemo i nakon pomeranja `%edx` ulevo `%edx` ce postati 0. Greska nastaje ako to ne proverimo jer onda cemo da povecamo brojac promenjenih bitova a nismo trebali to da uradimo jer je `%edx` dosao do kraja.

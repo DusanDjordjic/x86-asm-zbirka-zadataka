@@ -28,7 +28,7 @@ main:
     Write pitanje, $pitanje_len
     Read unos, $unos_len
 
-    # Ocitimo ceo ebx posto cemo da kasnije koristimo bl i bh
+    # Ocistimo ceo ebx posto cemo kasnije da koristimo bl i bh
     # A rezultat vracamo kao izlazni kod
     xor %ebx, %ebx
 
